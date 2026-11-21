@@ -59,3 +59,4 @@ The REST module deliberately covers only two lookups: `fetch_user_connection` an
 - Ruff runs in preview mode with line length 120. Rules are ignored by name, not by code, in `pyproject.toml`. Keep the explanatory comment next to each ignored rule.
 - The code uses modern Python syntax throughout: `type` aliases, PEP 695 generics, `match` statements, `Self`.
 - Behaviors of the live server that the official docs don't cover are listed in the README under "Notes on the live server". Add to that section when you find new ones.
+- Commit subjects use [gitmoji](https://gitmoji.dev) with the Unicode emoji first, e.g. `🐛 Fix ack matching after a timeout`. Pick the emoji for the change's main intent. CONTRIBUTING.md has the common ones.

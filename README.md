@@ -143,6 +143,8 @@ uv run ruff check
 uv run ty check    # type checking
 ```
 
+[CONTRIBUTING.md](CONTRIBUTING.md) has the details, including the commit message format.
+
 ## 🤖 AI disclosure
 
 This repository is a personal experiment. Until recently I hadn't used AI for coding *at all*. In October 2026 I started using it to review my code, but I never let it write anything from scratch. This project (first commit: November 2026) is the opposite: its architecture, code, tests, examples, and documentation were all produced by [Claude Code](https://claude.com/claude-code), with me directing the work.
