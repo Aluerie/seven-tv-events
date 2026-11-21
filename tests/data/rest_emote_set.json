@@ -1,0 +1,494 @@
+{
+ "id": "01FAQVCS500002EV4FV330P46A",
+ "name": "Default Emote Set",
+ "flags": 0,
+ "tags": [],
+ "immutable": false,
+ "privileged": false,
+ "emotes": [
+  {
+   "id": "01EZPJ9AFR000C438200A44F30",
+   "name": "FeelsDonkMan",
+   "flags": 0,
+   "timestamp": 1614591339000,
+   "actor_id": null,
+   "data": {
+    "id": "01EZPJ9AFR000C438200A44F30",
+    "name": "FeelsDonkMan",
+    "flags": 0,
+    "lifecycle": 3,
+    "state": [
+     "PERSONAL",
+     "LISTED"
+    ],
+    "listed": true,
+    "animated": false,
+    "owner": {
+     "id": "01H267D4K800080K50KTZJ96AQ",
+     "username": "aisenyeee",
+     "display_name": "AisenYeee",
+     "avatar_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/6039818f-d868-48ec-ab02-b79125eeb894-profile_image-300x300.png",
+     "style": {},
+     "role_ids": [
+      "01G68MMQFR0007J6GNM9E2M0TM"
+     ],
+     "connections": [
+      {
+       "id": "821542082",
+       "platform": "TWITCH",
+       "username": "aisenyeee",
+       "display_name": "AisenYeee",
+       "linked_at": 1685983761575,
+       "emote_capacity": 1000,
+       "emote_set_id": "01H267DBE00005AYDEKRM0G36C"
+      }
+     ]
+    },
+    "host": {
+     "url": "//cdn.7tv.app/emote/01EZPJ9AFR000C438200A44F30",
+     "files": [
+      {
+       "name": "1x.webp",
+       "static_name": "1x.webp",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 1038,
+       "format": "WEBP"
+      },
+      {
+       "name": "2x.webp",
+       "static_name": "2x.webp",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 2636,
+       "format": "WEBP"
+      },
+      {
+       "name": "3x.webp",
+       "static_name": "3x.webp",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 4414,
+       "format": "WEBP"
+      },
+      {
+       "name": "4x.webp",
+       "static_name": "4x.webp",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 6684,
+       "format": "WEBP"
+      },
+      {
+       "name": "1x.avif",
+       "static_name": "1x.avif",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 1570,
+       "format": "AVIF"
+      },
+      {
+       "name": "2x.avif",
+       "static_name": "2x.avif",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 3210,
+       "format": "AVIF"
+      },
+      {
+       "name": "3x.avif",
+       "static_name": "3x.avif",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 5008,
+       "format": "AVIF"
+      },
+      {
+       "name": "4x.avif",
+       "static_name": "4x.avif",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 7271,
+       "format": "AVIF"
+      },
+      {
+       "name": "1x.png",
+       "static_name": "1x.png",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 2052,
+       "format": "PNG"
+      },
+      {
+       "name": "2x.png",
+       "static_name": "2x.png",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 6322,
+       "format": "PNG"
+      },
+      {
+       "name": "3x.png",
+       "static_name": "3x.png",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 12810,
+       "format": "PNG"
+      },
+      {
+       "name": "4x.png",
+       "static_name": "4x.png",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 18821,
+       "format": "PNG"
+      }
+     ]
+    }
+   },
+   "origin_id": null
+  },
+  {
+   "id": "01EZTAKBN80002GHH6006GD246",
+   "name": "dankHug",
+   "flags": 0,
+   "timestamp": 1614717497000,
+   "actor_id": null,
+   "data": {
+    "id": "01EZTAKBN80002GHH6006GD246",
+    "name": "dankHug",
+    "flags": 0,
+    "lifecycle": 3,
+    "state": [
+     "PERSONAL",
+     "LISTED"
+    ],
+    "listed": true,
+    "animated": false,
+    "owner": {
+     "id": "01EZPFZZT00009D0SFZ9WC8RZ1",
+     "username": "rupusen",
+     "display_name": "rupusen",
+     "avatar_url": "https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-300x300.png",
+     "style": {},
+     "role_ids": [
+      "01G68MMQFR0007J6GNM9E2M0TM"
+     ],
+     "connections": [
+      {
+       "id": "52411991",
+       "platform": "TWITCH",
+       "username": "rupusen",
+       "display_name": "rupusen",
+       "linked_at": 1614588936000,
+       "emote_capacity": 1000,
+       "emote_set_id": "01EZPFZZT00009D0SFZ9WC8RZ1"
+      }
+     ]
+    },
+    "host": {
+     "url": "//cdn.7tv.app/emote/01EZTAKBN80002GHH6006GD246",
+     "files": [
+      {
+       "name": "1x.webp",
+       "static_name": "1x.webp",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 1106,
+       "format": "WEBP"
+      },
+      {
+       "name": "2x.webp",
+       "static_name": "2x.webp",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 2716,
+       "format": "WEBP"
+      },
+      {
+       "name": "3x.webp",
+       "static_name": "3x.webp",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 4530,
+       "format": "WEBP"
+      },
+      {
+       "name": "4x.webp",
+       "static_name": "4x.webp",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 6846,
+       "format": "WEBP"
+      },
+      {
+       "name": "1x.avif",
+       "static_name": "1x.avif",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 1316,
+       "format": "AVIF"
+      },
+      {
+       "name": "2x.avif",
+       "static_name": "2x.avif",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 2557,
+       "format": "AVIF"
+      },
+      {
+       "name": "3x.avif",
+       "static_name": "3x.avif",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 3747,
+       "format": "AVIF"
+      },
+      {
+       "name": "4x.avif",
+       "static_name": "4x.avif",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 5514,
+       "format": "AVIF"
+      },
+      {
+       "name": "1x.png",
+       "static_name": "1x.png",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 2177,
+       "format": "PNG"
+      },
+      {
+       "name": "2x.png",
+       "static_name": "2x.png",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 6701,
+       "format": "PNG"
+      },
+      {
+       "name": "3x.png",
+       "static_name": "3x.png",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 13521,
+       "format": "PNG"
+      },
+      {
+       "name": "4x.png",
+       "static_name": "4x.png",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 22089,
+       "format": "PNG"
+      }
+     ]
+    }
+   },
+   "origin_id": null
+  },
+  {
+   "id": "01F6MYYBGR000F76KNAAVA0BV1",
+   "name": "DANKPOGGIES",
+   "flags": 0,
+   "timestamp": 1622053695000,
+   "actor_id": null,
+   "data": {
+    "id": "01F6MYYBGR000F76KNAAVA0BV1",
+    "name": "DANKIES",
+    "flags": 0,
+    "lifecycle": 3,
+    "state": [
+     "LISTED"
+    ],
+    "listed": true,
+    "animated": false,
+    "owner": {
+     "id": "01F6MWMM4R0009HX192HRD4H4W",
+     "username": "sour_appl",
+     "display_name": "sour_appl",
+     "avatar_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/67c8d04c-0c95-4015-9eab-b4839014332b-profile_image-300x300.png",
+     "style": {},
+     "role_ids": [
+      "01G68MMQFR0007J6GNM9E2M0TM"
+     ],
+     "connections": [
+      {
+       "id": "91576008",
+       "platform": "TWITCH",
+       "username": "sour_appl",
+       "display_name": "sour_appl",
+       "linked_at": 1622051279000,
+       "emote_capacity": 1000,
+       "emote_set_id": "01F6MWMM4R0009HX192HRD4H4W"
+      }
+     ]
+    },
+    "host": {
+     "url": "//cdn.7tv.app/emote/01F6MYYBGR000F76KNAAVA0BV1",
+     "files": [
+      {
+       "name": "1x.webp",
+       "static_name": "1x.webp",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 1232,
+       "format": "WEBP"
+      },
+      {
+       "name": "2x.webp",
+       "static_name": "2x.webp",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 2994,
+       "format": "WEBP"
+      },
+      {
+       "name": "3x.webp",
+       "static_name": "3x.webp",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 5364,
+       "format": "WEBP"
+      },
+      {
+       "name": "4x.webp",
+       "static_name": "4x.webp",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 6384,
+       "format": "WEBP"
+      },
+      {
+       "name": "1x.avif",
+       "static_name": "1x.avif",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 1554,
+       "format": "AVIF"
+      },
+      {
+       "name": "2x.avif",
+       "static_name": "2x.avif",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 2950,
+       "format": "AVIF"
+      },
+      {
+       "name": "3x.avif",
+       "static_name": "3x.avif",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 4593,
+       "format": "AVIF"
+      },
+      {
+       "name": "4x.avif",
+       "static_name": "4x.avif",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 6231,
+       "format": "AVIF"
+      },
+      {
+       "name": "1x.png",
+       "static_name": "1x.png",
+       "width": 32,
+       "height": 32,
+       "frame_count": 1,
+       "size": 2739,
+       "format": "PNG"
+      },
+      {
+       "name": "2x.png",
+       "static_name": "2x.png",
+       "width": 64,
+       "height": 64,
+       "frame_count": 1,
+       "size": 8417,
+       "format": "PNG"
+      },
+      {
+       "name": "3x.png",
+       "static_name": "3x.png",
+       "width": 96,
+       "height": 96,
+       "frame_count": 1,
+       "size": 16314,
+       "format": "PNG"
+      },
+      {
+       "name": "4x.png",
+       "static_name": "4x.png",
+       "width": 128,
+       "height": 128,
+       "frame_count": 1,
+       "size": 25736,
+       "format": "PNG"
+      }
+     ]
+    }
+   },
+   "origin_id": null
+  }
+ ],
+ "emote_count": 3,
+ "capacity": 1000,
+ "owner": {
+  "id": "01FAQVCS500002EV4FV330P46A",
+  "username": "irene_adler__",
+  "display_name": "Irene_Adler__",
+  "avatar_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/cbcf07af-b3b5-4d3b-906f-324cee218f77-profile_image-300x300.png",
+  "style": {},
+  "role_ids": [
+   "01G68MMQFR0007J6GNM9E2M0TM"
+  ],
+  "connections": [
+   {
+    "id": "180499648",
+    "platform": "TWITCH",
+    "username": "irene_adler__",
+    "display_name": "Irene_Adler__",
+    "linked_at": 1626445604000,
+    "emote_capacity": 1000,
+    "emote_set_id": "01FAQVCS500002EV4FV330P46A"
+   }
+  ]
+ }
+}
