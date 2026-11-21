@@ -90,7 +90,7 @@ Each `dispatches()` call gets its own buffer, filled from the moment it's create
 
 Pass `session=` to share an existing `aiohttp.ClientSession` (for example a bot's).
 
-`ClosedError` is raised when the server closes with a code that must not be retried (`4001`–`4004`). Those codes indicate a client bug. It is also raised when the server closes the connection with the same subscription-related code (`4009`, `4010`, `4011` or `1008`) 5 times in a row without the connection becoming stable in between. A close that the client can attribute to one rejected subscription drops that subscription and doesn't count toward this limit.
+`ClosedError` is raised when the server closes with a code that must not be retried (`4001`–`4004`). Those codes indicate a client bug, except for a `4002` caused by an invalid subscription: the client drops that subscription and reconnects. `ClosedError` is also raised when the server closes the connection with the same subscription-related code (`4009`, `4010`, `4011` or `1008`) 5 times in a row without the connection becoming stable in between. A close that the client can attribute to one rejected subscription drops that subscription and doesn't count toward this limit.
 
 If `start()` is cancelled while it waits (for example by `asyncio.timeout`), the client is closed.
 
@@ -130,7 +130,8 @@ These behaviors are not in the official docs:
 - `Hello` also carries `instance` (`{"name": ..., "population": ...}`).
 - Ack echoes for `SUBSCRIBE` add a subscription `id` and rewrite a legacy hex ObjectID in `object_id` into a ULID. The client applies the same conversion when you subscribe (`seven_tv_events.legacy_id_to_ulid`), so the IDs in acks and events always match the ones you subscribed with. Other conditions are not converted (e.g. `entitlement.create`'s `id` is echoed unchanged).
 - Next to `object_id`, unknown condition keys are silently dropped from the ack echo.
-- An invalid condition value (e.g. a hex ID as `entitlement.create`'s `id`) gets an `ERROR` (op 6, `"Invalid Subscription Condition"`) instead of an ack. The connection stays open.
+- The server silently ignores a subscription it already has (no ack, and no `4009 Already Subscribed`), including one that only differs in keys it drops. The client never sends an exact duplicate, but a `subscribe()` that differs from an existing subscription only in such keys waits for `ack_timeout` and then assumes it succeeded.
+- An invalid condition value (e.g. a hex ID as `entitlement.create`'s `id`) gets an `ERROR` (op 6, `"Invalid Subscription Condition"`) instead of an ack, followed by `END_OF_STREAM` with `4002 Invalid Payload` and a `1008` close. The client drops that subscription and reconnects.
 - Some conditions (e.g. `host_id`) make the server end the connection: it sends `END_OF_STREAM` with `4002 Invalid Payload`, then a WebSocket close with the standard code `1008`. The client drops the offending subscription and reconnects instead of treating `4002` as fatal.
 - Wildcard types such as `cosmetic.*` and `emote_set.*` are accepted.
 

@@ -242,6 +242,7 @@ class Client:
         self._desired: dict[Subscription, None] = {}  # insertion-ordered set
         self._active: set[Subscription] = set()
         self._rejected: dict[Subscription, str] = {}  # subscriptions the server refused -> reason
+        self._rejected_by_error = False  # an ERROR rejected a subscription on the current connection
         self._sync_lock = asyncio.Lock()
 
         self._pending_acks: list[_PendingAck] = []
@@ -310,7 +311,7 @@ class Client:
             self._dispatch_handlers.remove((str(pattern), func))
 
     def on_event(self, name: LifecycleEvent) -> Callable[[EventHandler], EventHandler]:
-        """Decorator registering a coroutine for a lifecycle event (see :data:`LifecycleEvent`)."""
+        """Decorator registering a coroutine for a lifecycle event, such as ``"ready"`` or ``"disconnect"``."""
 
         def decorator(func: EventHandler) -> EventHandler:
             self.add_event_handler(name, func)
@@ -585,15 +586,19 @@ class Client:
         """
         if self._ready.is_set():
             return
-        waiters = {asyncio.create_task(self._ready.wait()), asyncio.create_task(self._run_done.wait())}
+        ready = asyncio.create_task(self._ready.wait())
+        stopped = asyncio.create_task(self._run_done.wait())
         try:
-            await asyncio.wait(waiters, return_when=asyncio.FIRST_COMPLETED)
+            await asyncio.wait({ready, stopped}, return_when=asyncio.FIRST_COMPLETED)
         finally:
-            for w in waiters:
-                w.cancel()
-        if not self._ready.is_set():
-            self._raise_run_error()
-            raise NotConnectedError("client stopped before becoming ready")
+            ready.cancel()
+            stopped.cancel()
+        # Check whether the client *became* ready, not whether it still is: a "ready"
+        # handler may already have called close().
+        if ready.done() and not ready.cancelled():
+            return
+        self._raise_run_error()
+        raise NotConnectedError("client stopped before becoming ready")
 
     async def wait_closed(self) -> None:
         """Wait until the client stops (after :meth:`close`, or a fatal error).
@@ -783,6 +788,7 @@ class Client:
                 raise _Disconnected(None, f"malformed HELLO: {exc!r}") from exc
             self._connecting = False
             self._hello = hello
+            self._rejected_by_error = False
             log.debug("Hello: session=%s heartbeat=%sms", hello.session_id, hello.heartbeat_interval)
 
             # Heartbeats missed for 3 cycles mean the connection is dead.
@@ -809,6 +815,7 @@ class Client:
         # before the resume result arrives, the next attempt must resume `previous` again.
         previous = self._resume_session_id
         resumed = False
+        self._rejected.clear()  # reasons nobody picked up during the previous connection
         if previous and previous != hello.session_id:
             pending = _PendingAck(Opcode.RESUME.command, None)
             self._pending_acks.append(pending)
@@ -872,9 +879,13 @@ class Client:
                 text = end_of_stream.message if end_of_stream else ""
                 # Runs before the handshake task is cancelled, so that a queued subscription
                 # it was sending is dropped too instead of being retried forever.
-                rejected = code in _REJECTING and self._reject_pending(
-                    f"connection closed ({code}{': ' + text if text else ''})"
-                )
+                rejected = False
+                if code in _REJECTING:
+                    # The live server follows an "Invalid Subscription Condition" ERROR with this
+                    # close; that ERROR already rejected the culprit, so don't blame another one.
+                    rejected = self._rejected_by_error or self._reject_pending(
+                        f"connection closed ({code}{': ' + text if text else ''})"
+                    )
                 raise _Disconnected(code, text or "connection closed", resumable=code != 1000, rejected=rejected)
 
             # A payload with an unexpected shape must not take the whole client down.
@@ -907,8 +918,10 @@ class Client:
             case Opcode.ERROR:
                 error = Error.from_json(d)
                 log.error("EventAPI error: %s %s", error.message, error.raw)
-                # The server answers an invalid subscription with an ERROR instead of an ack.
-                self._reject_pending(error.message or "server error")
+                # ERRORs don't name the command they answer. Only one about a subscription
+                # (e.g. "Invalid Subscription Condition") is the answer to a pending command.
+                if "subscription" in error.message.lower() and self._reject_pending(error.message):
+                    self._rejected_by_error = True
                 self._emit("error", error)
             case Opcode.RECONNECT:
                 self._emit("reconnect", Reconnect.from_json(d))

@@ -355,7 +355,7 @@ class EndOfStream:
     """Op 7. The server will send no further data and imminently end the connection."""
 
     code: CloseCode | int
-    """Close code; see :attr:`CloseCode.reconnect` for whether to reconnect."""
+    """Close code explaining why the connection is ending."""
     message: str
     """A text message about the closure."""
     raw: JSON = field(repr=False)

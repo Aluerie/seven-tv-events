@@ -27,7 +27,7 @@ async def main() -> None:
 
     @client.on_event("resumed")
     async def on_resumed(hello: seven_tv_events.Hello) -> None:
-        print("Reconnected and resumed the previous session; missed events are replayed")
+        print("Reconnected and resumed the previous session")
 
     @client.on_event("disconnect")
     async def on_disconnect(code: seven_tv_events.CloseCode | int | None) -> None:

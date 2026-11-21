@@ -7,11 +7,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```console
-uv run pytest                                          # all tests (in-process fake server, no network)
-uv run pytest tests/test_client.py::test_connect_and_ready   # a single test
+uv run pytest                                                 # all tests (in-process fake server, no network)
+uv run pytest tests/test_client.py::test_connect_and_ready    # a single test
 uv run ruff check --fix && uv run ruff format
-uv run ty check                                        # type checking (also covers examples/)
-uv run seven-tv-events emote_set.update:object_id=<id>          # CLI: prints dispatches as JSON lines
+uv run ty check                                               # type checking (also covers examples/)
+uv run seven-tv-events emote_set.update:object_id=<id>        # CLI: prints dispatches as JSON lines
 ```
 
 `uv sync` installs the `examples` group (twitchio) by default so that `ty` can resolve the example imports.
@@ -32,6 +32,9 @@ All the complicated logic lives in `Client`.
   - 4009 and 4010 (already subscribed / not subscribed) are treated as local desync. The loop starts a fresh, non-resumed session instead of giving up.
   - If the same code from `_GIVE_UP_WHEN_REPEATED` (4009, 4010, 4011, 1008) closes 5 unstable connections in a row, the loop raises `ClosedError` instead of retrying forever.
 - **Rejected subscriptions.** The live server answers an invalid subscription with an ERROR (op 6), or by ending the connection (END_OF_STREAM 4002 followed by a 1008 close, or 4011). `_reject_pending` attributes the refusal to the oldest pending command, removes a rejected SUBSCRIBE from `_desired`, and records it in `_rejected` so that `subscribe()` can raise `SubscriptionError`. On a close, this runs in the reader before the handshake task is cancelled, and a close that rejected a subscription is reconnected (even 4002) without counting toward the repeat limit.
+  - ERRORs don't name the command they answer, so only those whose message mentions "subscription" count as rejections.
+  - The live server follows such an ERROR with END_OF_STREAM 4002 and a 1008 close. `_rejected_by_error` (reset per connection) makes that close count as already handled, so a second, valid subscription sent in between isn't blamed too.
+  - The live server never acks a duplicate subscription. Don't build logic on `_stale_acks` predicting the next server answer: a silently ignored duplicate also leaves a stale count behind.
 - **Handshake.** After HELLO, the reader task and the `_handshake` task run concurrently. `_handshake` tries RESUME with `_resume_session_id`. If the resume fails, it clears `_active` so `_sync()` re-subscribes everything. `_resume_session_id` only moves to the new session after the resume result is known, so a drop mid-handshake still resumes the old session.
 - **Ack matching.** The server rewrites IDs in its ack echoes, so `_resolve_ack` matches on content when it can and otherwise in FIFO order. When a command times out, the client assumes it succeeded and increments `_stale_acks`, so the late ack is discarded instead of shifting every later match.
 - **Watchdog.** A connection that receives nothing for 3 × `heartbeat_interval` + `heartbeat_grace` seconds is closed as dead.

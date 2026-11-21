@@ -30,10 +30,16 @@ class SubscriptionLimitError(SubscriptionError):
 
 
 class ClosedError(EventAPIError):
-    """The server closed the connection in a way the client must not retry.
+    """The server closed the connection in a way the client won't retry.
 
-    Raised by :meth:`seven_tv_events.Client.run` for close codes whose reconnect policy is
-    :attr:`~seven_tv_events.ReconnectPolicy.NO`. These indicate a client bug.
+    Raised by :meth:`seven_tv_events.Client.run` in two cases:
+
+    * a close code whose reconnect policy is :attr:`~seven_tv_events.ReconnectPolicy.NO`
+      (``4001``-``4004``), which indicates a client bug. A ``4002`` that the client
+      can attribute to one invalid subscription is not fatal: that subscription is
+      dropped and the client reconnects.
+    * the same subscription-related close (``4009``, ``4010``, ``4011`` or ``1008``)
+      ending 5 connections in a row, which a fresh session did not fix.
     """
 
     def __init__(self, code: CloseCode | int | None, message: str = "") -> None:

@@ -5,10 +5,9 @@ API (``seven_tv_events.rest.fetch_emote_set``), then apply EventAPI changes to i
 It also shows two less obvious things:
 
 * sharing one ``aiohttp.ClientSession`` between the REST calls and the client;
-* re-fetching the set after a reconnect that could NOT resume the session
-  (``"ready"`` fires again), since events may have been missed in between.
-  After a successful resume (``"resumed"``) the server replays missed events,
-  so no re-fetch is needed.
+* re-fetching the set after every reconnect (``"ready"`` or ``"resumed"``),
+  since events may have been missed while the connection was down. Re-applying
+  a change the snapshot already has is harmless, so this is always safe.
 
     uv run python examples/emote_set_mirror.py EMOTE_SET_ID
 """
@@ -75,11 +74,14 @@ async def main() -> None:
         mirror = EmoteSetMirror(session, EMOTE_SET_ID)
         client = seven_tv_events.Client(session=session)  # reuse the same HTTP session
 
-        @client.on_event("ready")
-        async def on_ready(hello: seven_tv_events.Hello) -> None:
-            # Fires on the first connect and after every reconnect that started a
-            # fresh session, which is exactly when our copy may be stale.
+        async def reload(hello: seven_tv_events.Hello) -> None:
+            # "ready" fires on the first connect and after reconnects that started a fresh
+            # session; "resumed" after reconnects that continued the old one. Either way,
+            # events sent while we were disconnected may be missing from our copy.
             await mirror.load()
+
+        client.add_event_handler("ready", reload)
+        client.add_event_handler("resumed", reload)
 
         @client.on_dispatch(seven_tv_events.SubscriptionType.EMOTE_SET_UPDATE)
         async def on_update(event: seven_tv_events.Dispatch) -> None:

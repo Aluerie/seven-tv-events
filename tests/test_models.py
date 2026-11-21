@@ -87,18 +87,21 @@ def test_close_code_policies_cover_every_code() -> None:
 
 
 def test_subscription_equality_ignores_condition_order() -> None:
-    a = Subscription("cosmetic.*", host_id="h", connection_id="1")
-    b = Subscription("cosmetic.*", {"connection_id": "1"}, host_id="h")
+    a = Subscription("entitlement.create", ctx="channel", platform="TWITCH", id="1")
+    b = Subscription("entitlement.create", {"platform": "TWITCH", "id": "1"}, ctx="channel")
     assert a == b and hash(a) == hash(b)
-    assert a != Subscription("cosmetic.*", host_id="h")
-    assert a.to_json() == {"type": "cosmetic.*", "condition": {"connection_id": "1", "host_id": "h"}}
+    assert a != Subscription("entitlement.create", ctx="channel", platform="TWITCH")
+    assert a.to_json() == {
+        "type": "entitlement.create",
+        "condition": {"ctx": "channel", "id": "1", "platform": "TWITCH"},
+    }
 
 
 def test_cli_parse_subscription() -> None:
     assert parse_subscription("emote_set.update:object_id=abc") == Subscription("emote_set.update", object_id="abc")
     assert parse_subscription("system.announcement") == Subscription("system.announcement")
-    assert parse_subscription("cosmetic.*:host_id=h, connection_id=1") == Subscription(
-        "cosmetic.*", host_id="h", connection_id="1"
+    assert parse_subscription("entitlement.create:ctx=channel, id=1") == Subscription(
+        "entitlement.create", ctx="channel", id="1"
     )
     with pytest.raises(argparse.ArgumentTypeError):
         parse_subscription("emote.update:oops")
